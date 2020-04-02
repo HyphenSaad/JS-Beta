@@ -1,1 +1,1 @@
-alert("ok>>>>>>>")
+console.log("Alpha is beta....")
