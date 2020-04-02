@@ -1,0 +1,37 @@
+/* to reset styles on root level */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#main-header {
+    background-color: rgb(56, 56, 54);
+    height: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.beta {
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+    margin: -16px;
+    transform: rotate(90deg);
+    text-transform: lowercase;
+    background-color: rgb(22, 156, 190);
+    padding: 2px 15px 2px 14.1px;
+}
+
+.js-logo {
+    background-color: #F7DF1E;
+    color: #000;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    margin: 35px 0px;
+    font-size: 40px;
+    padding: 20px 8px 0px 20px;
+}
