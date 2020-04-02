@@ -1,0 +1,105 @@
+/* to reset some styling on root level */
+
+:root {
+    --background-color: #F5F5F5;
+    /* --submit-button-BG: #2962ff;
+    --submit-button-FG: #BBDEFB;
+    --input-field-BG: #BBDEFB;
+    --input-field-FG: #2962FF; */
+    --input-area-shadow: #E0E0E0;
+    --input-area-shadow-hover: #BDBDBD;
+    --submit-button-BG: #006442;
+    --submit-button-FG: #A5D6A7;
+    --input-field-BG: #A5D6A7;
+    --input-field-FG: #006442;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: sans-serif;
+}
+
+.input-bar {
+    margin-top: 8px;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.shadow-div {
+    border-radius: 50px;
+    box-shadow: 2px 2px 2px var(--input-area-shadow);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.shadow-div:hover {
+    box-shadow: 4px 4px 6px 0px var(--input-area-shadow-hover);
+}
+
+.input-bar input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 10px 16px;
+    border-radius: 50px 0px 0px 50px;
+    color: var(--input-field-FG);
+    background-color: var(--input-field-BG);
+    width: 350px;
+}
+
+.input-bar button {
+    border: none;
+    outline: none;
+    padding: 10px 15px 10px 10px;
+    background-color: var(--submit-button-BG);
+    color: var(--submit-button-FG);
+    font-size: 16px;
+    border-radius: 0px 50px 50px 0px;
+}
+
+.input-bar input::placeholder {
+    color: #757575;
+}
+
+.data-area {
+    display: flex;
+    height: 70vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+.data-row {
+    /* background-color: green; */
+    width: 390px;
+    height: 30px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.data-itself {
+    display: inline-block;
+    padding: 7px;
+    width: 91%;
+    border-radius: 0px 30px 30px 0px;
+    /* background-color: var(--input-field-BG); */
+    background-color: #C8E6C9;
+    color: var(--input-field-FG);
+    overflow: hidden;
+}
+
+.data-count {
+    background-color: var(--submit-button-BG);
+    color: var(--submit-button-FG);
+    display: inline-block;
+    padding: 7px 11px 7px 15px;
+    border-radius: 30px 0px 0px 30px;
+    overflow: hidden;
+}
