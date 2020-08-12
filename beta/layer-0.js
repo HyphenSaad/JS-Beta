@@ -13,7 +13,7 @@ backgroudCanvas.add(
 
 function generate() {
     backgroudCanvas.add(
-        new fabric.Text(urdu, { fontFamily: 'Jameel Khushkhati', }).set({
+        new fabric.Text(urdu, { fontFamily: 'Jameel Khushkhati', fill: '#fff' }).set({
             top: coordinatesOfPreviousObj.top,
             left: coordinatesOfPreviousObj.left,
             scaleX: coordinatesOfPreviousObj.scaleX,
