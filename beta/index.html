@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200px, initial-scale=1.0">
+    <title>HyphenSaad</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.0.0/fabric.min.js"></script>
+</head>
+
+<body>
+    <div id="main-view">
+        <div id="canvas-view">
+            <canvas id="layer-0" width="1500" height="1500"></canvas>
+            <canvas id="layer-1" width="1500" height="1500"></canvas>
+        </div>
+        <div id="keyboard-view" dir="ltr">
+            <button id="generate">DOWNLOAD</button>
+            <div id="keyboard">
+                <div id="row1">
+                    <button id="key-1" class="fix-key">&#1633</button>
+                    <button id="key-2" class="fix-key">&#1634</button>
+                    <button id="key-3" class="fix-key">&#1635</button>
+                    <button id="key-4" class="fix-key">&#1636</button>
+                    <button id="key-5" class="fix-key">&#1637</button>
+                    <button id="key-6" class="fix-key">&#1638</button>
+                    <button id="key-7" class="fix-key">&#1639</button>
+                    <button id="key-8" class="fix-key">&#1640</button>
+                    <button id="key-9" class="fix-key">&#1641</button>
+                    <button id="key-0" class="fix-key">&#1632</button>
+                </div>
+                <div id="row2">
+                    <button id="key-q">ق</button>
+                    <button id="key-w" class="fix-key">و</button>
+                    <button id="key-e">ع</button>
+                    <button id="key-r" class="fix-key">ر</button>
+                    <button id="key-t">ت</button>
+                    <button id="key-y">ے</button>
+                    <button id="key-u" class="fix-key">ء</button>
+                    <button id="key-i">ی</button>
+                    <button id="key-o" class="fix-key">ہ</button>
+                    <button id="key-p">پ</button>
+
+                    <button id="key-q-">ث</button>
+                    <button id="key-w-" class="fix-key">ڈ</button>
+                    <button id="key-e-">غ</button>
+                    <button id="key-r-">ح</button>
+                    <button id="key-t-">خ</button>
+                    <button id="key-y-">ض</button>
+                    <button id="key-u-">ں</button>
+                    <button id="key-i-">ۃ</button>
+                    <button id="key-o-">ص</button>
+                    <button id="key-p-">ٹ</button>
+                </div>
+                <div id="row3">
+                    <button id="key-caps"><img src="./assests/icons/CAPS-angle-double-up-solid.svg" alt=""></button>
+                    <button id="key-a" class="fix-key">ا</button>
+                    <button id="key-s">س</button>
+                    <button id="key-d" class="fix-key">د</button>
+                    <button id="key-f">ف</button>
+                    <button id="key-g">گ</button>
+                    <button id="key-h" class="fix-key">ھ</button>
+                    <button id="key-j">ج</button>
+                    <button id="key-k">ک</button>
+                    <button id="key-l">ل</button>
+
+                    <button id="key-a-">یء</button>
+                    <button id="key-s-" class="fix-key">ظ</button>
+                    <button id="key-d-" class="fix-key">ؤ</button>
+                    <button id="key-f-" class="fix-key">ژ</button>
+                    <button id="key-g-">آ</button>
+                    <button id="key-h-" class="special-key">ُ</button>
+                    <button id="key-j-" class="special-key">ّ</button>
+                    <button id="key-k-" class="special-key-1">َ</button>
+                    <button id="key-l-" class="special-key">َ</button>
+                </div>
+                <div id="row4">
+                    <button id="key-special-1" class="fix-key">؛</button>
+                    <button id="key-z" class="fix-key">ز</button>
+                    <button id="key-x">ش</button>
+                    <button id="key-c">چ</button>
+                    <button id="key-v" class="fix-key">ط</button>
+                    <button id="key-b">ب</button>
+                    <button id="key-n">ن</button>
+                    <button id="key-m">م</button>
+                    <button id="key-clear" onclick="clearText()"><img src="./assests/icons/CLEAR-backspace-solid.svg" alt=""></button>
+
+                    <button id="key-z-">؟</button>
+                    <button id="key-x-" class="extra-fix">ﷺ</button>
+                    <button id="key-c-">ۓ</button>
+                    <button id="key-v-"> </button>
+                    <button id="key-b-"> </button>
+                    <button id="key-n-"> </button>
+                    <button id="key-m-"> </button>
+                </div>
+                <div id="row5">
+                    <button id="key-fullstop">۔</button>
+                    <button id="key-space">سعدی</button>
+                    <button id="key-enter"><img src="./assests/icons/ENTER-arrow-right-solid.svg" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./keyboard.js"></script>
+    <script src="./layer-0.js"></script>
+    <script src="./layer-1.js"></script>
+</body>
+
+</html>
