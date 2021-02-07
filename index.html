@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPA Calculator | HyphenSaad</title>
     <link href="https://fonts.googleapis.com/css?family=Barlow:400,400i,500" rel="stylesheet">
-    <style>
+<style>
 :root {
     --course-width: 800px;
     --course-title-width: 60%;
@@ -339,7 +339,37 @@ select {
         font-size: 2.75rem;
     }
 }
-</style>
+
+@media screen and (max-width: 375px){
+    :root {
+        --course-title-width: 100%;
+        --course-grade-width: calc(30% - 0.8rem);
+        --course-credit-hours-width: 35%;
+        --course-remove-button-width: 35%;
+        --font-size: 45%;
+        /* before it was 45% */
+    }
+    #progress-bar {
+        transform: scale(0.5);
+        right: -6.5rem;
+    }
+}
+
+@media screen and (max-width: 375px){
+    :root {
+        --font-size: 45%;
+    }
+
+    #progress-bar {
+        transform: scale(0.45);
+        right: -8rem;
+    }
+
+    .add-semester-button {
+        width: calc(var(--course-remove-button-width) + 3rem);
+    }
+}
+<style/>
 </head>
 
 <body>
@@ -359,20 +389,19 @@ select {
     <script>
 let GradePoints = ['4.00', '3.75', '3.50', '3.00', '2.50', '2.00', '1.50', '1.00', '0.00']
 let Grades = ['A', 'A-', 'B+', 'B', 'C', 'C+', 'D', 'D+', 'F']
-
-let Semester = {}
-
+let TotalRecord = new Object();
 let ID = 0;
 let SemesterCount = 0;
 
 function RemoveCourse(Semester, ID) {
-    document.getElementById(`${ID}`).remove()
+    let List = document.getElementsByClassName('semester')[Semester - 1].children[2]
+    document.getElementById(`course-${ID}`).remove()
     CalculateSGPA(`${Semester}`)
-    if (document.getElementsByClassName('semester')[Semester - 1].children[2].childElementCount < 2) { RemoveSemester(Semester) }
+    if (List.childElementCount < 2) { RemoveSemester(Semester) }
 }
 
 function CreateCourse(semester) {
-    let item = CreateElement('li', { class: "course", id: `${ID}` })
+    let item = CreateElement('li', { class: "course", id: `course-${ID}` })
     item.appendChild(CreateElement('input', { class: "course-title", type: "text", placeholder: "Course Title", }))
     let select = CreateElement('select', { class: "course-grade", oninput: `CalculateSGPA(${semester})`, })
     select.appendChild(CreateElement('option', { selected: "selected", hidden: "hidden", disabled: "disabled", }, "Grade"))
@@ -381,7 +410,7 @@ function CreateCourse(semester) {
     item.appendChild(CreateElement('span', { class: "break", }))
     item.appendChild(CreateElement('input', { class: "course-credit-hours", type: "number", placeholder: "Credit Hours", min: "1", oninput: `CalculateSGPA(${semester})`, }))
     item.appendChild(CreateElement('button', { class: "remove-course-button", onclick: `RemoveCourse(${semester},${ID})`, }, "Remove  \u2716"))
-    document.getElementById(`sem-${semester}`).insertAdjacentElement('afterbegin', item)
+    document.getElementById(`sem-${semester}`).insertBefore(item, document.getElementById(`end-${SemesterCount}`))
     ID++
 }
 
@@ -396,7 +425,7 @@ function CreateSemester() {
     item.appendChild(CreateElement('h1', { id: "semester-title", }, `Semester ${++SemesterCount < 9 ? "0" + SemesterCount : SemesterCount}`))
     item.appendChild(CreateElement('button', { class: "remove-semester-button", onclick: `RemoveSemester(${SemesterCount})` }, '\u2716'))
     let Semester = CreateElement('ul', { class: "semester-courses", id: `sem-${SemesterCount}` })
-    let SemesterEnd = CreateElement('div', { class: "semester-end" })
+    let SemesterEnd = CreateElement('div', { class: "semester-end", id: `end-${SemesterCount}` })
     let Result = CreateElement('h3', { class: "semester-result", }, "SGPA: ")
     Result.appendChild(CreateElement('span', {}, "0.00"))
     SemesterEnd.appendChild(Result)
@@ -404,7 +433,7 @@ function CreateSemester() {
     Semester.appendChild(SemesterEnd)
     item.appendChild(Semester)
     document.getElementById("main-container").appendChild(item)
-    for (let i = 0; i < 5; ++i) { CreateCourse(SemesterCount) }
+    for (let i = 0; i < 3; ++i) { CreateCourse(SemesterCount) }
     UpdateProgress()
 }
 
@@ -429,22 +458,21 @@ function CalculateSGPA(e) {
         let Credits = parseInt(Course[i].children[3].value) // Credit Hours
         X += ((isNaN(Points) ? 0 : Points) * (isNaN(Credits) ? 0 : Credits))
         Y += isNaN(Credits) ? 0 : Credits
-
     }
-    let GPA = X / Y;
-    Semester[e] = { Points: X, Credits: Y }
+    let GPA = X / Y, CGPA = 0;
     document.getElementsByClassName('semester-result')[e - 1].children[0].innerText = (isNaN(GPA) ? 0 : GPA).toFixed(2);
 
+    TotalRecord[`sem-${e}`] = { Points: X, Credits: Y }
     let A = 0, B = 0
-    for (key in Semester) {
-        A += Semester[key].Points
-        B += Semester[key].Credits
+    for (key in TotalRecord) {
+        A += TotalRecord[key].Points
+        B += TotalRecord[key].Credits
     }
-    C = A / B
-    UpdateProgress(isNaN(C) ? 0 : C)
-}
+    CGPA = A/B
+    UpdateProgress(isNaN(CGPA) ? 0 : CGPA)
 
-CreateSemester()
+    SaveData()
+}
 
 function UpdateProgress(CGPA = 0) {
     function SetProgressBar(e, percent) {
@@ -461,6 +489,56 @@ function UpdateProgress(CGPA = 0) {
 
     document.getElementsByClassName('CGPA-earned')[0].innerHTML = CGPA.toFixed(2)
 }
+
+function ReadData() {
+    let Data = {}
+    let Entries = document.getElementsByClassName('semester-courses')
+    for (let i = 0, k = 0; i < Entries.length; i++) { // Semesters
+        let a = new Object();
+        for (let j = 0; j < Entries[i].children.length - 1; j++) { // Courses
+            let t = new Object();
+            t.title = Entries[i].children[j].children[0].value
+            t.grade = Entries[i].children[j].children[1].value
+            let u = Entries[i].children[j].children[3].value
+            t.credits = isNaN(u) ? -1 : u
+            a[k++] = t;
+        }
+        Data[i] = a
+    }
+    return Data
+}
+
+function SaveData() {
+    localStorage.removeItem('course-data')
+    localStorage.setItem('course-data', JSON.stringify(ReadData()))
+}
+
+function UpdateData() {
+    let Data = JSON.parse(localStorage.getItem('course-data'))
+    let Entries = document.getElementsByClassName('semester-courses')
+    let i = 0, j = 0
+    for (Semester in Data) {
+        if (i > 0) { CreateSemester() }
+        j = 0
+        for (Course in Data[Semester]) {
+            if (Entries[i].children[j].children[1].value !== undefined) {
+                if (j > 2) { CreateCourse(i + 1) }
+                Entries[i].children[j].children[0].value = Data[Semester][Course].title
+                if (Data[Semester][Course].grade !== 'Grade') { Entries[i].children[j].children[1].value = Data[Semester][Course].grade }
+                if (Data[Semester][Course].credits !== -1) { Entries[i].children[j].children[3].value = Data[Semester][Course].credits }
+                j++
+            }
+        }
+        CalculateSGPA(parseInt(1 + i))
+        i++
+    }
+}
+
+(() => {
+    CreateSemester()
+    UpdateData()
+}
+)();
 </script>
 </body>
 
